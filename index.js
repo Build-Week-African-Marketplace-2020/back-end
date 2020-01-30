@@ -3,6 +3,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 const session = require("express-session");
 const KnexSessionStore = require("connect-session-knex")(session);
+require("dotenv").config();
 
 const dbConfig = require("./database/dbConfig");
 const authRouter = require("./auth/auth-router");
