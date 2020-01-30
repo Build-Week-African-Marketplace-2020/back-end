@@ -3,13 +3,13 @@ module.exports = {
     client: "sqlite3",
     useNullAsDefault: true,
     connection: {
-      filename: "./database/auth.db3"
+      filename: "./database/marketplace.db3"
     },
     production: {
       client: "sqlite3",
       useNullAsDefault: true,
       connection: {
-        filename: "./database/auth.db3"
+        filename: "./database/marketplace.db3"
       }
     },
     pool: {
