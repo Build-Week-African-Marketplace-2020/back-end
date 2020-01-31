@@ -48,9 +48,17 @@ exports.up = async knex => {
   });
 };
 
-exports.down = async knex => {
-  await knex.schema.dropTableIfExists("products");
-  await knex.schema.dropTableIfExists("categories");
-  await knex.schema.dropTableIfExists("commodities");
-  await knex.schema.dropTableIfExists("users");
+// exports.down = async knex => {
+//   await knex.schema.dropTableIfExists("products");
+//   await knex.schema.dropTableIfExists("categories");
+//   await knex.schema.dropTableIfExists("commodities");
+//   await knex.schema.dropTableIfExists("users");
+// };
+
+exports.down = function(knex, Promise) {
+  return knex.schema
+    .dropTableIfExists("products")
+    .dropTableIfExists("categories")
+    .dropTableIfExists("commodities")
+    .dropTableIfExists("users");
 };
