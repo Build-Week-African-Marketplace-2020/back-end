@@ -1,6 +1,6 @@
 exports.seed = async knex => {
-  await knex("categories").insert([
+  await knex("commodities").insert([
     { name: "Animal Products" },
-    { name: "Vegetable Products" }
+    { name: "Fresh Produce" }
   ]);
 };
