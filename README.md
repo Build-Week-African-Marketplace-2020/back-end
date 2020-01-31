@@ -28,4 +28,7 @@ mp/products(POST) -- A POST request to post a new product to the DB, this is a p
 mp/products/:id -- A GET request to grab a specific product by id to see it's details
 
 mp/categories -- A GET request to get a list of all available categories
+
 mp/categories/:id -- A GET request to grab a specific category by id
+
+mp/categories(POST) -- A POST request to create a new category for products to be placed if need. This is a protected route so the user needs to be logged in.
