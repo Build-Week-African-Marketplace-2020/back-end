@@ -1,5 +1,6 @@
 const express = require("express");
 const db = require("../database/dbConfig");
+const restricted = require("../middleware/restricted");
 const router = express.Router({
   mergeParams: true
 });
@@ -15,7 +16,7 @@ router.get("/products", async (req, res, next) => {
   }
 });
 
-router.post("/products", async (req, res, next) => {
+router.post("/products", restricted(), async (req, res, next) => {
   try {
     const ids = await db("products").insert(req.body, "id");
     const newProduct = await db("products")
