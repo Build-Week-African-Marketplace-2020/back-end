@@ -53,4 +53,16 @@ router.get("/categories", async (req, res, next) => {
   }
 });
 
+router.get("/categories/:id", async (req, res, next) => {
+  try {
+    const cat = await db("categories")
+      .where({ id: req.params.id })
+      .first();
+
+    res.status(200).json(cat);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
