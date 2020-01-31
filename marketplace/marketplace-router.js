@@ -14,4 +14,19 @@ router.get("/products", async (req, res, next) => {
   }
 });
 
+router.post("/products", async (req, res, next) => {
+  try {
+    const ids = await db("products").insert(req.body);
+    const newProduct = await db("products")
+      .where({ id: ids[0] })
+      .first();
+
+    res.status(201).json({
+      message: `${newProduct} successfully saved to the database!`
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
