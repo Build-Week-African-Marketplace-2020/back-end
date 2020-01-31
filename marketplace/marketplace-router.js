@@ -29,4 +29,16 @@ router.post("/products", async (req, res, next) => {
   }
 });
 
+router.get("/products/:id", async (req, res, next) => {
+  try {
+    const product = await db("products")
+      .where({ id: req.params.id })
+      .first();
+
+    res.status(200).json(product);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
