@@ -8,6 +8,7 @@ require("dotenv").config();
 const dbConfig = require("./database/dbConfig");
 const authRouter = require("./auth/auth-router");
 const usersRouter = require("./users/users-router");
+const mpRouter = require("./marketplace/marketplace-router");
 
 const server = express();
 const port = process.env.PORT || 5500;
@@ -34,6 +35,7 @@ server.use(
 
 server.use("/auth", authRouter);
 server.use("/users", usersRouter);
+server.use("/mp", mpRouter);
 
 server.get("/", (req, res, next) => {
   res.json({
