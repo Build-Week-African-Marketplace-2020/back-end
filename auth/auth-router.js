@@ -24,7 +24,10 @@ router.post("/login", async (req, res, next) => {
     if (user && passwordValid) {
       req.session.user = user;
       res.status(200).json({
-        message: `Welcome ${user.username}!`
+        username: user.username,
+        user_id: user.id,
+        first_name: user.first_name,
+        last_name: user.last_name
       });
     } else {
       res.status(401).json({
