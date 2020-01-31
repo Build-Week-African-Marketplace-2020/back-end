@@ -66,4 +66,21 @@ router.get("/categories/:id", async (req, res, next) => {
   }
 });
 
+router.post("/categories", restricted(), async (req, res, next) => {
+  try {
+    const ids = await db("categories").insert(req.body, "id");
+    const newCat = await db("categories")
+      .where({ id: ids[0] })
+      .first();
+
+    res
+      .status(201)
+      .json(
+        `New category named: ${newCat.name}, has been added to the database!`
+      );
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
