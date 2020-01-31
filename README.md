@@ -20,6 +20,7 @@ auth/logout -- Route that logs out a user that is currently inside session store
 **Marketplace Routes ⬇️**
 
 mp/products -- A GET request to get a list of all available products
+
 mp/products(POST) -- A POST request to post a new product to the DB
 
 `{ "name": "Celery", "location": "Uganda", "price": "1", "category_id": 3 }`

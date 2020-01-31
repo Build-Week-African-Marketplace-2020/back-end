@@ -4,6 +4,7 @@ const router = express.Router({
   mergeParams: true
 });
 
+// PRODUCT ROUTES
 router.get("/products", async (req, res, next) => {
   try {
     const products = await db("products").select();
@@ -36,6 +37,17 @@ router.get("/products/:id", async (req, res, next) => {
       .first();
 
     res.status(200).json(product);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// CATERGORY ROUTES
+router.get("/categories", async (req, res, next) => {
+  try {
+    const cat = await db("categories").select();
+
+    res.status(200).json(cat);
   } catch (err) {
     next(err);
   }
