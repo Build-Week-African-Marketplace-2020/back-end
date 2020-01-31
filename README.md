@@ -23,3 +23,5 @@ mp/products -- A GET request to get a list of all available products
 mp/products(POST) -- A POST request to post a new product to the DB
 
 `{ "name": "Celery", "location": "Uganda", "price": "1", "category_id": 3 }`
+
+mp/products/:id -- A GET request to grab a specific product by id to see it's details
