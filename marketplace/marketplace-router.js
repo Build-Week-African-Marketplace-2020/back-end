@@ -83,4 +83,27 @@ router.post("/categories", restricted(), async (req, res, next) => {
   }
 });
 
+// COMMODITY ROUTES
+router.get("/comm", async (req, res, next) => {
+  try {
+    const comms = await db("commodities").select();
+
+    res.json(comms);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/comm/:id", async (req, res, next) => {
+  try {
+    const comms = await db("commodities")
+      .where({ id: req.params.id })
+      .first();
+
+    res.json(comms);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
