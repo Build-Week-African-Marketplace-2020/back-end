@@ -37,3 +37,7 @@ mp/categories(POST) -- A POST request to create a new category for products to b
 "name": "Grains",
 "commodity_id": 2
 }
+
+mp/comms -- A GET request to get a list of all available commodities
+
+mp/comms/:id -- A GET request to get a commodity by id
