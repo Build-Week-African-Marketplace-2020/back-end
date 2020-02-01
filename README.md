@@ -32,3 +32,12 @@ mp/categories -- A GET request to get a list of all available categories
 mp/categories/:id -- A GET request to grab a specific category by id
 
 mp/categories(POST) -- A POST request to create a new category for products to be placed if need. This is a protected route so the user needs to be logged in.
+
+{
+"name": "Grains",
+"commodity_id": 2
+}
+
+mp/comms -- A GET request to get a list of all available commodities
+
+mp/comms/:id -- A GET request to get a commodity by id
