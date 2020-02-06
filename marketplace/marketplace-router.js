@@ -1,6 +1,6 @@
 const express = require("express");
 const db = require("../database/dbConfig");
-const restricted = require("../middleware/restricted");
+const restricted = require("../auth/restricted-middleware.js");
 const mpModel = require("./marketplace-model");
 const router = express.Router({
   mergeParams: true
@@ -17,7 +17,7 @@ router.get("/products", async (req, res, next) => {
   }
 });
 
-router.post("/products", restricted(), async (req, res, next) => {
+router.post("/products", restricted, async (req, res, next) => {
   try {
     const ids = await db("products").insert(req.body, "id");
     const newProduct = await db("products")
@@ -44,7 +44,7 @@ router.get("/products/:id", async (req, res, next) => {
   }
 });
 
-router.put("/products/:id", async (req, res, next) => {
+router.put("/products/:id", restricted, async (req, res, next) => {
   try {
     const { id } = req.params;
     const product = await mpModel.update(id, req.body);
@@ -61,7 +61,7 @@ router.put("/products/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/products/:id", async (req, res, next) => {
+router.delete("/products/:id", restricted, async (req, res, next) => {
   try {
     const { id } = req.params;
     const delProduct = await mpModel.remove(id);
@@ -103,7 +103,7 @@ router.get("/categories/:id", async (req, res, next) => {
   }
 });
 
-router.post("/categories", restricted(), async (req, res, next) => {
+router.post("/categories", restricted, async (req, res, next) => {
   try {
     const ids = await db("categories").insert(req.body, "id");
     const newCat = await db("categories")
