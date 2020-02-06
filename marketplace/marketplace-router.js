@@ -67,7 +67,9 @@ router.delete("/products/:id", async (req, res, next) => {
     const delProduct = await mpModel.remove(id);
 
     if (delProduct) {
-      res.status(204).end();
+      res.status(204).json({
+        message: "Product deleted"
+      });
     } else {
       res.status(404).json({
         message: "Could not find a product with given ID"
