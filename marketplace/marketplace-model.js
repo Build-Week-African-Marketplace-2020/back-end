@@ -15,7 +15,9 @@ async function update(id, body) {
 }
 
 function remove(id) {
-  return db("products").where({ id }).del;
+  return db("products")
+    .where({ id })
+    .del();
 }
 
 module.exports = {
