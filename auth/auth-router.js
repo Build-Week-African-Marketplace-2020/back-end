@@ -1,64 +1,43 @@
+const router = require("express").Router();
 const bcrypt = require("bcryptjs");
-const express = require("express");
-const usersModel = require("../users/users-model");
-const restricted = require("../middleware/restricted");
 
-const router = express.Router();
+const tokenService = require("../auth/token-service.js");
+const Users = require("../users/users-model.js");
 
-router.post("/register", async (req, res, next) => {
-  try {
-    const saved = await usersModel.add(req.body);
+router.post("/register", (req, res) => {
+  let user = req.body;
+  const hash = bcrypt.hashSync(user.password, 10);
+  user.password = hash;
 
-    res.status(201).json(saved);
-  } catch (err) {
-    next(err);
-  }
+  Users.add(user)
+    .then(saved => {
+      res.status(201).json(saved);
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
 });
 
-router.post("/login", async (req, res, next) => {
-  try {
-    const { username, password } = req.body;
-    const user = await usersModel.findBy({ username }).first();
-    const passwordValid = await bcrypt.compare(password, user.password);
+router.post("/login", (req, res) => {
+  let { username, password } = req.body;
 
-    if (user && passwordValid) {
-      req.session.user = user;
-      res.status(200).json({
-        username: user.username,
-        user_id: user.id,
-        first_name: user.first_name,
-        last_name: user.last_name
-      });
-    } else {
-      res.status(401).json({
-        message: "Invalid Credentials"
-      });
-    }
-  } catch (err) {
-    next(err);
-  }
-});
-
-// router.get("/protected", restricted(), async (req, res, next) => {
-//   try {
-//     res.json({
-//       message: "You are authorized"
-//     });
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
-router.get("/logout", restricted(), async (req, res, next) => {
-  req.session.destroy(err => {
-    if (err) {
-      next(err);
-    } else {
-      res.json({
-        message: "You are logged out!"
-      });
-    }
-  });
+  Users.findBy({ username })
+    .first()
+    .then(user => {
+      if (user && bcrypt.compareSync(password, user.password)) {
+        const token = tokenService.generateToken(user);
+        res.status(200).json({
+          message: `Welcome ${user.username}!, have a token...`,
+          token,
+          roles: token.roles
+        });
+      } else {
+        res.status(401).json({ message: "Invalid Credentials" });
+      }
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
 });
 
 module.exports = router;
