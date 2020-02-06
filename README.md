@@ -27,6 +27,12 @@ mp/products(POST) -- A POST request to post a new product to the DB, this is a p
 
 mp/products/:id -- A GET request to grab a specific product by id to see it's details
 
+mp/products/:id -- PUT request to update a specific product
+
+`{ "name": "super celery", "location": "Uganda", "price": "1", "category_id": 3 }`
+
+mp/products/:id -- DEL request to delete a specific product from DB
+
 mp/categories -- A GET request to get a list of all available categories
 
 mp/categories/:id -- A GET request to grab a specific category by id
