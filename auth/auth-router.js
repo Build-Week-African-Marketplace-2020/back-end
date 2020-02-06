@@ -5,11 +5,11 @@ const tokenService = require("../auth/token-service.js");
 const Users = require("../users/users-model.js");
 
 router.post("/register", (req, res) => {
-  let user = (req.body, "id");
+  let user = req.body;
   const hash = bcrypt.hashSync(user.password, 10);
   user.password = hash;
 
-  Users.add(user)
+  Users.add(user, "id")
     .then(saved => {
       res.status(201).json(saved);
     })
