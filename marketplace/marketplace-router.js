@@ -1,6 +1,7 @@
 const express = require("express");
 const db = require("../database/dbConfig");
 const restricted = require("../middleware/restricted");
+const mpModel = require("./marketplace-model");
 const router = express.Router({
   mergeParams: true
 });
@@ -38,6 +39,40 @@ router.get("/products/:id", async (req, res, next) => {
       .first();
 
     res.status(200).json(product);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/products/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const product = await mpModel.update(id, req.body);
+
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404).json({
+        message: "Could not find a product with the given ID"
+      });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.delete("/products/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const delProduct = await mpModel.remove(id);
+
+    if (delProduct) {
+      res.status(204).end();
+    } else {
+      res.status(404).json({
+        message: "Could not find a product with given ID"
+      });
+    }
   } catch (err) {
     next(err);
   }
